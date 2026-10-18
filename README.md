@@ -1,127 +1,335 @@
 # ServeRest API Testing Portfolio
 
-> **Work in progress** | Current milestone: **User Management — Manual API Testing**
+> **Work in Progress** | Current Milestone: **User Management — Manual API Testing Completed**
 
 ## Project Overview
 
-This portfolio demonstrates a structured approach to testing REST APIs using **ServeRest**, a practice e-commerce API. The project begins with manual API test design and execution in Postman and will be extended with automated API tests and CI execution as development progresses.
+This portfolio demonstrates a structured approach to REST API testing using **ServeRest**, a practice e-commerce API.
 
-The goal is to demonstrate practical QA skills: understanding API behavior, designing positive and negative tests, checking expected versus actual results, managing test data, and documenting reproducible evidence.
+The project focuses on manual API test design and execution using Postman, with plans to expand into API automation and CI/CD.
 
-**Current progress (18 October 2026):** Four User Management test cases have been manually executed and passed. The remaining modules and automation activities are planned, not yet completed.
+The goal is to demonstrate practical QA skills, including:
+
+- Understanding API requirements and expected behavior
+- Designing positive and negative test scenarios
+- Validating HTTP status codes and response data
+- Managing test data and dependencies
+- Recording actual results and execution evidence
+- Identifying and documenting defects
+- Developing maintainable API automation tests
+
+**Current Progress (18 October 2026):** Four User Management manual API test cases have been executed and passed. Other modules, automation, and CI/CD activities are planned.
 
 ## System Under Test
 
-| Item | Detail |
-| --- | --- |
-| Application | ServeRest — e-commerce practice REST API |
+| Item | Description |
+|---|---|
+| Application | ServeRest |
+| Application Type | E-commerce REST API |
 | Base URL | `https://serverest.dev` |
-| API documentation | [ServeRest API documentation](https://serverest.dev/) |
-| Source project | [ServeRest official GitHub repository](https://github.com/ServeRest/ServeRest) |
-| Test environment | ServeRest public online environment |
-| Current testing tool | Postman |
+| API Documentation | [ServeRest API Documentation](https://serverest.dev/) |
+| Official Source | [ServeRest GitHub](https://github.com/ServeRest/ServeRest) |
+| Environment | Public API environment |
+| Current Testing Tool | Postman |
+| Documentation | Microsoft Excel |
+| Version Control | Git and GitHub |
 
-ServeRest is maintained by an external open-source project. The API and its documentation are **not** developed or owned by this portfolio's author. Test scenarios, execution records, and evidence in this repository are portfolio work.
+ServeRest is an external open-source project. This repository contains independently developed QA portfolio work and is not an official ServeRest test suite.
 
-Test expectations are informed by the published API documentation and observed behavior. Any additional test objectives are portfolio-derived; they should not be represented as official business acceptance criteria.
+Test expectations are based on published API documentation and observed behavior. Portfolio-derived test objectives are not represented as official business acceptance criteria.
+
+---
 
 ## Test Scope and Progress
 
 | Module / Activity | Scope | Status |
-| --- | --- | --- |
-| User Management | Create users, reject duplicate email, validate required email, retrieve a user by ID | **Completed — 4/4 manual tests passed** |
+|---|---|---|
+| User Management | Create user, duplicate email, missing email, retrieve user | Completed — 4/4 manual tests passed |
 | Authentication | Login and authorization scenarios | Planned |
 | Products | Product API scenarios | Planned |
 | Cart | Cart API scenarios | Planned |
-| API Automation | Postman assertions, reusable variables, request chaining, selected data-driven tests | Planned |
-| CI/CD | Newman execution and GitHub Actions reporting | Planned |
+| API Automation | Postman assertions, variables, request chaining, data-driven testing | Planned |
+| CI/CD | Newman and GitHub Actions | Planned |
 
-**Scope note:** “Completed” refers only to the four documented User Management manual test cases, not to all possible User Management behaviors or the entire API.
+**Scope Note:** User Management completion refers only to the four documented manual test cases, not complete coverage of all User Management features.
+
+---
 
 ## Testing Approach
 
-The current manual testing work includes:
+### Manual API Testing
 
-- **Positive testing:** Validate a successful request with valid input.
-- **Negative testing:** Validate API rejection of duplicate and incomplete data.
-- **Response validation:** Check HTTP status codes, response fields, and error messages.
-- **Data consistency:** Confirm that a retrieved user's details match the user created for the test.
-- **Test evidence:** Capture the request configuration and observed response for each execution.
+Manual API tests are designed and executed using Postman.
 
-Test cases and expected results are documented separately from actual execution results. A new execution record is used for a retest rather than overwriting an earlier result.
+The testing approach includes:
+
+- **Positive Testing:** Verify successful API behavior with valid requests.
+- **Negative Testing:** Verify appropriate error responses for invalid or incomplete requests.
+- **Status Code Validation:** Compare actual HTTP status codes against expected results.
+- **Response Validation:** Verify required response fields, values, and messages.
+- **Data Consistency:** Confirm retrieved information matches previously created test data.
+- **Test Evidence:** Capture request configuration and actual API responses.
+
+Test design and execution results are maintained separately in the Excel workbook.
+
+### API Automation — Planned
+
+The automation phase is planned to cover selected risk-based scenarios using:
+
+- Postman JavaScript assertions
+- Collection and environment variables
+- Request chaining
+- Dynamic test data
+- Data-driven testing
+- JSON schema validation
+- Newman CLI
+- GitHub Actions CI
+- Execution reports and artifacts
+
+Automation tests have not yet been implemented or executed as part of this portfolio.
+
+---
 
 ## User Management — Manual Test Results
 
-- **Execution date:** 18 October 2026
-- **Environment:** ServeRest public API
-- **Execution method:** Manual API requests in Postman
+- **Execution Date:** 18 October 2026
+- **Environment:** ServeRest Public API
+- **Execution Method:** Manual API requests using Postman
 
-| Test Case ID | Scenario | Method | Endpoint | Expected HTTP Status | Result |
-| --- | --- | --- | --- | --- | --- |
-| `TC-USER-001` | Create a user with valid data | `POST` | `/usuarios` | `201` | **PASS** |
-| `TC-USER-002` | Reject an email already registered | `POST` | `/usuarios` | `400` | **PASS** |
-| `TC-USER-003` | Reject a request missing the required `email` field | `POST` | `/usuarios` | `400` | **PASS** |
-| `TC-USER-004` | Retrieve the newly created user by ID | `GET` | `/usuarios/{id}` | `200` | **PASS** |
+### Test Case Summary
+
+| Test Case ID | Test Scenario | Method | Endpoint | Expected Status | Actual Result |
+|---|---|---|---|---|---|
+| TC-USER-001 | Create a user with valid data | POST | `/usuarios` | 201 | PASS |
+| TC-USER-002 | Reject duplicate email registration | POST | `/usuarios` | 400 | PASS |
+| TC-USER-003 | Reject user creation without email | POST | `/usuarios` | 400 | PASS |
+| TC-USER-004 | Retrieve an existing user by ID | GET | `/usuarios/{id}` | 200 | PASS |
 
 ### Observed Results
 
-- **TC-USER-001:** The API returned `201 Created`, a success message (`Cadastro realizado com sucesso`), and a generated user `_id`.
-- **TC-USER-002:** The API returned `400 Bad Request` with the message `Este email já está sendo usado` for the duplicate email.
-- **TC-USER-003:** The API returned `400 Bad Request` with `email é obrigatório` when the `email` field was omitted.
-- **TC-USER-004:** The API returned `200 OK` and the retrieved user data matched the user created during testing.
+**TC-USER-001 — Create User**
 
-The quoted Portuguese messages above reflect the observed API responses; they have not been rewritten as English response payloads.
+- HTTP Status: `201 Created`
+- Success Message: `Cadastro realizado com sucesso`
+- A unique user `_id` was returned.
+- Result: **PASS**
 
-### Execution Summary
+**TC-USER-002 — Duplicate Email**
 
-| Metric | Count |
-| --- | ---: |
-| Executed test cases | 4 |
+- HTTP Status: `400 Bad Request`
+- Error Message: `Este email já está sendo usado`
+- Duplicate email registration was rejected.
+- Result: **PASS**
+
+**TC-USER-003 — Missing Email**
+
+- HTTP Status: `400 Bad Request`
+- Error Response: `email é obrigatório`
+- The request was rejected when the required `email` field was omitted.
+- Result: **PASS**
+
+**TC-USER-004 — Get User by ID**
+
+- HTTP Status: `200 OK`
+- The requested user was retrieved.
+- Returned user information matched the user created during testing.
+- Result: **PASS**
+
+The Portuguese messages above reflect observed ServeRest API responses.
+
+### Test Execution Summary
+
+| Metric | Result |
+|---|---:|
+| Total Executed | 4 |
 | Passed | 4 |
 | Failed | 0 |
-| Confirmed defects | 0 |
+| Confirmed Defects | 0 |
+| Recorded Pass Rate | 100% |
 
-These results describe the recorded manual executions only. They do not imply complete API coverage or an automated test run.
+**Result:** All four documented User Management manual scenarios passed.
 
-## Test Documentation and Evidence
+These results apply only to the recorded manual executions and do not represent complete API coverage or an automated test run.
 
-Manual test design and execution results are managed in **one Excel workbook with two worksheets**:
+---
 
-1. **Test Cases:** Scenarios, requirements, preconditions, request data, steps, and expected results.
-2. **Test Execution:** Per-run actual results, status, execution date, evidence reference, and retest history.
+## Test Documentation
 
-For the GitHub milestone, place the workbook at `test-documentation/ServeRest_API_Test_Cases_Final.xlsx` (or update this path to match its final filename).
+The project maintains manual test documentation in a single Excel workbook containing two worksheets.
 
-For each of the four completed manual test cases, evidence is organized into two screenshots: `01_REQUEST` (request configuration) and `02_RESPONSE` (observed HTTP response). The intended repository paths are:
+### 1. Test Cases
 
-| Test Case | Request Evidence | Response Evidence |
-| --- | --- | --- |
-| `TC-USER-001` | `evidence/manual-api/user-management/TC-USER-001_01_REQUEST.png` | `evidence/manual-api/user-management/TC-USER-001_02_RESPONSE.png` |
-| `TC-USER-002` | `evidence/manual-api/user-management/TC-USER-002_01_REQUEST.png` | `evidence/manual-api/user-management/TC-USER-002_02_RESPONSE.png` |
-| `TC-USER-003` | `evidence/manual-api/user-management/TC-USER-003_01_REQUEST.png` | `evidence/manual-api/user-management/TC-USER-003_02_RESPONSE.png` |
-| `TC-USER-004` | `evidence/manual-api/user-management/TC-USER-004_01_REQUEST.png` | `evidence/manual-api/user-management/TC-USER-004_02_RESPONSE.png` |
+Contains:
 
-**Publishing note:** These paths are local evidence references for the current milestone. After the files are committed to GitHub, links can be added to the Excel `Evidence` field and to this README. No GitHub-hosted evidence links are claimed yet.
+- Test Case ID
+- Test Scenario
+- Requirements and Preconditions
+- HTTP Method and Endpoint
+- Request Data
+- Test Steps
+- Expected Results
+
+### 2. Test Execution
+
+Contains:
+
+- Test Case ID
+- Execution Information
+- Actual Results
+- PASS / FAIL Status
+- Execution Date
+- Evidence References
+- Retest Information
+
+**Excel Workbook:**
+
+[View ServeRest API Test Cases and Execution Results](test-documentation/ServeRest_API_Test_Cases.xlsx)
+
+---
+
+## Manual Test Evidence
+
+Each completed manual test case includes two screenshots:
+
+- **Request Evidence:** Postman request configuration and test data.
+- **Response Evidence:** Actual HTTP status and API response.
+
+### TC-USER-001 — Create User
+
+- [View Request Screenshot](evidence/manual-api/user-management/TC-USER-001_CREATE_USER_REQUEST.png)
+- [View Response Screenshot](evidence/manual-api/user-management/TC-USER-001_CREATE_USER_RESPONSE.png)
+
+### TC-USER-002 — Duplicate Email
+
+- [View Request Screenshot](evidence/manual-api/user-management/TC-USER-002_DUPLICATE_EMAIL_REQUEST.png)
+- [View Response Screenshot](evidence/manual-api/user-management/TC-USER-002_DUPLICATE_EMAIL_RESPONSE.png)
+
+### TC-USER-003 — Missing Email
+
+- [View Request Screenshot](evidence/manual-api/user-management/TC-USER-003_MISSING_EMAIL_REQUEST.png)
+- [View Response Screenshot](evidence/manual-api/user-management/TC-USER-003_MISSING_EMAIL_RESPONSE.png)
+
+### TC-USER-004 — Get User by ID
+
+- [View Request Screenshot](evidence/manual-api/user-management/TC-USER-004_GET_USER_REQUEST.png)
+- [View Response Screenshot](evidence/manual-api/user-management/TC-USER-004_GET_USER_RESPONSE.png)
+
+All eight evidence files are included in the repository.
+
+The Excel workbook provides the detailed test design and recorded execution results, while the screenshots provide supporting evidence for the manual API executions.
+
+---
+
+## Repository Structure
+
+```text
+serverest-api-testing/
+├── .gitignore
+├── README.md
+├── test-documentation/
+│   └── ServeRest_API_Test_Cases.xlsx
+└── evidence/
+    └── manual-api/
+        └── user-management/
+            ├── TC-USER-001_CREATE_USER_REQUEST.png
+            ├── TC-USER-001_CREATE_USER_RESPONSE.png
+            ├── TC-USER-002_DUPLICATE_EMAIL_REQUEST.png
+            ├── TC-USER-002_DUPLICATE_EMAIL_RESPONSE.png
+            ├── TC-USER-003_MISSING_EMAIL_REQUEST.png
+            ├── TC-USER-003_MISSING_EMAIL_RESPONSE.png
+            ├── TC-USER-004_GET_USER_REQUEST.png
+            └── TC-USER-004_GET_USER_RESPONSE.png
+```
+
+This structure represents the files currently tracked in Git. Additional folders for automation, test data, and CI/CD will be added as those milestones are implemented.
+
+---
 
 ## Environment Notes and Limitations
 
-- The public ServeRest environment is shared, and its data is cleared daily according to the project's documentation. Tests must not rely on records remaining available between separate sessions.
-- User creation and retrieval scenarios depend on valid test data and the ID returned during the current run. Future automation will create its own required data and reuse the generated ID rather than depend on a hard-coded record.
-- Error messages are returned in Portuguese. Assertions and reports should preserve the actual response text when checking exact values.
-- The current results are limited to the four listed manual scenarios. Authentication, Products, Cart, automation, and CI/CD have not yet been reported as completed.
-- Only disposable, purpose-created demo credentials should be used in public test artifacts. Real passwords, tokens, and secrets must not be published.
+### Shared Public Environment
+
+ServeRest uses a public testing environment. Test data may be reset or modified independently of this portfolio.
+
+Tests must not assume records created during earlier sessions remain available.
+
+### Test Data Dependencies
+
+Some scenarios depend on data created by earlier requests.
+
+For example:
+
+1. Create a user.
+2. Capture the generated user ID.
+3. Retrieve the user using that ID.
+4. Validate the returned user information.
+
+Future automation will manage these dependencies dynamically rather than rely on hard-coded IDs.
+
+### Error Messages
+
+Some ServeRest API responses use Portuguese error messages. Assertions should use the actual documented or observed response values.
+
+### Current Coverage
+
+The recorded manual testing covers four User Management scenarios only.
+
+Authentication, Products, Cart, API Automation, and CI/CD are not yet completed.
+
+### Sensitive Information
+
+Only disposable test credentials should be used.
+
+Real passwords, authentication tokens, API keys, and other secrets must not be committed to this public repository.
+
+---
 
 ## Next Milestones
 
-1. Publish the current User Management Excel workbook and request/response evidence on GitHub.
-2. Design and execute selected Authentication, Products, and Cart API scenarios.
-3. Automate appropriate scenarios with Postman assertions, variables, request chaining, and a focused data-driven test.
-4. Run the collection with Newman and add GitHub Actions execution with downloadable test reports.
-5. Update the overall test summary, limitations, evidence links, and README as each milestone is completed.
+### Milestone 2 — Authentication Testing
+
+- Design positive and negative authentication scenarios.
+- Execute manual API tests.
+- Document expected and actual results.
+- Capture execution evidence.
+
+### Milestone 3 — Products and Cart Testing
+
+- Test selected product management scenarios.
+- Test selected cart workflows.
+- Validate authorization and data dependencies where applicable.
+- Record test results and evidence.
+
+### Milestone 4 — API Automation
+
+- Add Postman test scripts and assertions.
+- Introduce reusable variables.
+- Implement request chaining.
+- Use dynamic test data.
+- Implement selected data-driven scenarios.
+- Add response schema checks where appropriate.
+
+### Milestone 5 — CI/CD
+
+- Execute automated tests using Newman.
+- Integrate execution into GitHub Actions.
+- Generate test reports.
+- Publish execution artifacts.
+- Document how to reproduce the automated test runs.
+
+### Milestone 6 — Final Portfolio Review
+
+- Review test coverage and traceability.
+- Verify documentation and evidence references.
+- Review automation reliability.
+- Document known limitations and remaining risks.
+- Finalize the portfolio for job applications.
+
+---
 
 ## References and Attribution
 
-- [ServeRest — API Documentation](https://serverest.dev/)
-- [ServeRest — Official Source Repository](https://github.com/ServeRest/ServeRest)
+- [ServeRest — Official API Documentation](https://serverest.dev/)
+- [ServeRest — Official GitHub Repository](https://github.com/ServeRest/ServeRest)
 
-This is an independent QA learning and portfolio project. It is not an official ServeRest test suite or a claim of production certification.
+This repository is an independent QA learning and portfolio project. It is not affiliated with or endorsed by the ServeRest maintainers.

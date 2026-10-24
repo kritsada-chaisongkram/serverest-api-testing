@@ -8,6 +8,20 @@ This is a QA portfolio project using the [ServeRest](https://serverest.dev/) pra
 
 The project covers four API modules. A separate automation phase using Postman scripts, Newman, and GitHub Actions is planned.
 
+## Quick Portfolio Review
+
+| Item | Details |
+|---|---|
+| Project | ServeRest API Testing |
+| Testing Type | Manual REST API Testing (Postman) |
+| Modules Tested | User Management, Authentication, Products, Cart |
+| Manual Test Results | 16 recorded PASS results across 16 test cases* |
+| Test Documentation | [Test Cases & Execution Results](test-documentation/ServeRest_API_Test_Cases.xlsx) |
+| Test Evidence | [View Screenshots](evidence/manual-api/) |
+| API Automation | Planned — 8 selected scenarios |
+
+*One Authentication negative case passed the observed rejection behavior, but its exact error-response contract still needs independent confirmation. Results do not imply complete API coverage.*
+
 ## Tools and Environment
 
 | Item | Details |

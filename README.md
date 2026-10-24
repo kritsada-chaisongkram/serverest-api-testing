@@ -136,11 +136,11 @@ serverest-api-testing/
 
 ## Next Steps
 
-1. Final check of screenshot file names, sensitive data, and workbook evidence paths.
-2. Commit the completed Manual API Testing milestone to GitHub.
-3. Build selected Postman automated tests with reusable setup/data.
-4. Run tests with Newman and integrate GitHub Actions.
-5. Review the final portfolio and document how to reproduce the tests.
+**Completed:** Manual API testing (16 test cases), execution documentation, evidence links, and GitHub publication.
+
+1. Automate the eight selected scenarios in Postman using JavaScript assertions and reusable setup/test data.
+2. Run the collection with Newman and integrate it with GitHub Actions.
+3. Document how to reproduce the automated test runs, review results, and finalize the portfolio.
 
 ## References
 

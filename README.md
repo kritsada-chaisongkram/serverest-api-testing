@@ -1,39 +1,27 @@
 # ServeRest API Testing Portfolio
 
-**Manual API Testing: 16 test cases completed** | **API Automation: Planned**
+**Manual API Testing: 16 test cases completed | API Automation: In progress**
 
 ## Project Overview
 
-This is a QA portfolio project using the [ServeRest](https://serverest.dev/) practice e-commerce REST API. I used Postman to design and execute positive and negative API tests, review responses, and record test results with screenshots.
+I used Postman to practice API testing with [ServeRest](https://serverest.dev/), a public e-commerce API. I wrote test cases, sent API requests, checked the responses, and saved screenshots of the results.
 
-The project covers four API modules. A separate automation phase using Postman scripts, Newman, and GitHub Actions is planned.
+My manual tests cover User Management, Authentication, Products, and Cart. I am now working on automating selected test cases.
 
 ## Quick Portfolio Review
 
 | Item | Details |
 |---|---|
-| Project | ServeRest API Testing |
-| Testing Type | Manual REST API Testing (Postman) |
-| Modules Tested | User Management, Authentication, Products, Cart |
-| Manual Test Results | 16 recorded PASS results across 16 test cases* |
-| Test Documentation | [Test Cases & Execution Results](test-documentation/ServeRest_API_Test_Cases.xlsx) |
-| Test Evidence | [View Screenshots](evidence/manual-api/) |
-| API Automation | Planned — 8 selected scenarios |
+| Tool | Postman |
+| Manual testing | 16 test cases across 4 modules |
+| Recorded results | 16 PASS* |
+| Test documentation | [Test Cases and Execution Results](test-documentation/ServeRest_API_Test_Cases.xlsx) |
+| Screenshots | [View Test Evidence](evidence/manual-api/) |
+| Automation | 8 test cases selected; work in progress |
 
-*One Authentication negative case passed the observed rejection behavior, but its exact error-response contract still needs independent confirmation. Results do not imply complete API coverage.*
+*TC-AUTH-004 passed the observed missing-email rejection. I have not independently confirmed the exact expected error status and message.*
 
-## Tools and Environment
-
-| Item | Details |
-|---|---|
-| API | [ServeRest](https://serverest.dev/) |
-| Base URL | `https://serverest.dev` |
-| Testing tool | Postman |
-| Test documentation | Excel |
-| Version control | Git and GitHub |
-| Test environment | Shared public API |
-
-## Manual Testing Summary
+## Manual Test Results
 
 | Module | Test Cases | Passed |
 |---|---:|---:|
@@ -43,11 +31,9 @@ The project covers four API modules. A separate automation phase using Postman s
 | Cart | 4 | 4 |
 | **Total** | **16** | **16*** |
 
-*The Authentication missing-email case passed the observed rejection behavior; its exact error-response contract still needs independent confirmation. Results describe the recorded manual executions, not complete API coverage.*
+### Test Cases
 
-### Test Scenarios
-
-| Test Case ID | Scenario | Recorded Result |
+| Test Case ID | Scenario | Result |
 |---|---|---|
 | TC-USER-001 | Create valid user | PASS |
 | TC-USER-002 | Reject duplicate email | PASS |
@@ -66,38 +52,32 @@ The project covers four API modules. A separate automation phase using Postman s
 | TC-CART-003 | Reject cart with insufficient stock | PASS |
 | TC-CART-004 | Reject cart with nonexistent product | PASS |
 
-## Testing Approach
+## How I Tested
 
-1. Review API behavior and identify positive and negative scenarios.
-2. Prepare test data and check prerequisites (such as user login, existing products, or available stock).
-3. Send requests using Postman.
-4. Compare HTTP status codes and response data with expected results.
-5. Perform supporting GET checks when needed, such as confirming stock or cart details.
-6. Record actual results and capture request/response evidence.
+1. Choose a scenario and write the expected result.
+2. Prepare the user, product, or cart data needed for the test.
+3. Send the request in Postman.
+4. Check the HTTP status, response body, and related data when needed.
+5. Record the actual result and save screenshots.
 
-Test cases and execution results are recorded in a two-sheet Excel workbook:
-
-- **Test Cases:** Preconditions, request data, test steps, and expected results.
-- **Test Execution:** Actual results, PASS/FAIL, evidence paths, and remarks.
-
-**[View Manual Test Cases and Execution Results](test-documentation/ServeRest_API_Test_Cases.xlsx)**
+The Excel workbook has two sheets: **Test Cases** (steps and expected results) and **Test Execution** (actual results, status, and evidence links).
 
 ## Test Evidence
 
-Screenshots are organized by module. Each case has request/response evidence, with additional setup or verification screenshots where needed.
+Screenshots are saved by module:
 
-- [User Management evidence](evidence/manual-api/user-management/)
-- [Authentication evidence](evidence/manual-api/authentication/)
-- [Products evidence](evidence/manual-api/products/)
-- [Cart evidence](evidence/manual-api/cart/)
+- [User Management](evidence/manual-api/user-management/)
+- [Authentication](evidence/manual-api/authentication/)
+- [Products](evidence/manual-api/products/)
+- [Cart](evidence/manual-api/cart/)
 
-Evidence screenshots should not include passwords, active Bearer tokens, or API keys. File paths in the workbook should be checked against the committed screenshots.
+Some tests also have setup or verification screenshots. For example, Cart tests include checks of stock or cart data.
 
-## Automation — Planned
+## API Automation — In Progress
 
-Eight manual scenarios have been selected as the starting scope for automation:
+I selected these 8 cases to automate in Postman:
 
-| Test Case ID | Planned Automation Scenario |
+| Test Case ID | Scenario |
 |---|---|
 | TC-USER-001 | Create valid user |
 | TC-USER-002 | Reject duplicate email |
@@ -108,43 +88,25 @@ Eight manual scenarios have been selected as the starting scope for automation:
 | TC-CART-001 | Create valid cart |
 | TC-CART-003 | Reject insufficient stock |
 
-Planned work includes JavaScript assertions, variables, request chaining, fresh test data, Newman reports, and GitHub Actions. **These automated tests and CI runs are not yet complete.**
+I am working on JavaScript assertions, variables, and reusable test data. Newman and GitHub Actions are planned. **Automated test execution and CI reports have not been published yet.**
 
-## Project Structure
+## Notes
 
-```text
-serverest-api-testing/
-├── README.md
-├── test-documentation/
-│   └── ServeRest_API_Test_Cases.xlsx
-├── evidence/
-│   └── manual-api/
-│       ├── user-management/
-│       ├── authentication/
-│       ├── products/
-│       └── cart/
-└── postman/                 # Collection/automation work to be added
-```
-
-## Notes and Limitations
-
-- ServeRest is a shared public API. Test records and product stock may change or reset, so prerequisites must be checked before each run.
-- Some responses use Portuguese messages; recorded actual results keep the API's original wording.
-- TC-AUTH-004: the missing-email request was rejected, but the exact expected error status/message contract has not been independently confirmed.
-- A rejected request and a follow-up lookup are documented separately when used as supporting evidence; results are not claimed beyond what was checked.
-- Use only disposable test accounts. Do not commit passwords, Bearer tokens, or Vault keys.
+- The tests use the shared public ServeRest API (`https://serverest.dev`). Test data can change or reset.
+- Some API messages are in Portuguese. I recorded the messages returned by the API.
+- The 16 PASS results describe these manual test runs, not full API coverage.
+- TC-AUTH-004 needs confirmation of the exact expected error response.
+- Only test accounts should be used. Passwords, active tokens, and API keys should not be shared in the repository.
 
 ## Next Steps
 
-**Completed:** Manual API testing (16 test cases), execution documentation, evidence links, and GitHub publication.
-
-1. Automate the eight selected scenarios in Postman using JavaScript assertions and reusable setup/test data.
-2. Run the collection with Newman and integrate it with GitHub Actions.
-3. Document how to reproduce the automated test runs, review results, and finalize the portfolio.
+1. Finish the 8 selected Postman automated tests with data that can be used again.
+2. Run the collection with Newman and GitHub Actions.
+3. Add instructions for running the tests, reports, and final portfolio review.
 
 ## References
 
 - [ServeRest API Documentation](https://serverest.dev/)
-- [ServeRest Official GitHub Repository](https://github.com/ServeRest/ServeRest)
+- [ServeRest GitHub](https://github.com/ServeRest/ServeRest)
 
-This is an independent QA learning portfolio and is not an official ServeRest test suite.
+This is my independent practice project, not an official ServeRest test suite.

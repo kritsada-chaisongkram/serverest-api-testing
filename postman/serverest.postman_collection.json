@@ -1,0 +1,1366 @@
+{
+  "info": {
+    "_postman_id": "5e43506c-6217-4b41-96ef-170a92f15ad9",
+    "name": "ServeRest API Testing Portfolio",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57783570",
+    "_collection_link": "https://go.postman.co/collection/57783570-5e43506c-6217-4b41-96ef-170a92f15ad9?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Manual API Testing",
+      "item": [
+        {
+          "name": "User Management",
+          "item": [
+            {
+              "name": "TC-USER-001 - Create Valid User",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nome\": \"John Smith\",\r\n  \"email\": \"john.smith.qa20261017@example.com\",\r\n  \"password\": \"QA-Test-1234\",\r\n  \"administrador\": \"false\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://serverest.dev/usuarios",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "usuarios"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-USER-002 - Create Duplicate User",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nome\": \"Duplicate Test User\",\r\n  \"email\": \"john.smith.qa20261017@example.com\",\r\n  \"password\": \"QA-Test-5678\",\r\n  \"administrador\": \"false\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://serverest.dev/usuarios",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "usuarios"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-USER-003 - Missing Required Email",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nome\": \"Jason Ether\",\r\n  \"password\": \"QA-Test-0978\",\r\n  \"administrador\": \"false\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://serverest.dev/usuarios",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "usuarios"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-USER-004 - Get User by ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://serverest.dev/usuarios/eXjC09MMioyFqyXd",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "usuarios",
+                    "eXjC09MMioyFqyXd"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Authentication",
+          "item": [
+            {
+              "name": "SETUP - Create Authentication Test User",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nome\": \"Auth Test User\",\r\n  \"email\": \"qa.auth.20261018.2209@example.com\",\r\n  \"password\": \"QaTest@123\",\r\n  \"administrador\": \"false\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://serverest.dev/usuarios",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "usuarios"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CHECK - Unregistered Email",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://serverest.dev/usuarios?email=qa.auth.20261018.3211@example.com",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "usuarios"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "qa.auth.20261018.3211@example.com"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-AUTH-001 - Valid Login",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"email\": \"qa.auth.20261018.2210@example.com\",\r\n  \"password\": \"QaTest@123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://serverest.dev/login",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-AUTH-002 - Login with Invalid Password",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"email\": \"qa.auth.20261018.2210@example.com\",\r\n  \"password\": \"WrongPassword123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://serverest.dev/login",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-AUTH-003 - Login with Unregistered Email",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"email\": \"qa.auth.20261018.2210@example.com\",\r\n  \"password\": \"WrongPassword123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://serverest.dev/login",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-AUTH-004 -  Login with Missing Email Field",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "https://serverest.dev/login",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Products",
+          "item": [
+            {
+              "name": "SETUP - Create Admin User",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nome\": \"QA Admin Test\",\r\n  \"email\": \"qa.admin.20261023.0109@example.com\",\r\n  \"password\": \"QaTest@123\",\r\n  \"administrador\": \"true\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://serverest.dev/usuarios",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "usuarios"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "SETUP - Admin Login",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"email\": \"qa.auth.20261018.2210@example.com\",\r\n  \"password\": \"QaTest@123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://serverest.dev/login",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CHECK - Verify Created Product",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CHECK - Verify Duplicate Product",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-PROD-001 - Retrieve Product List",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();\r\n\r\nconsole.log(\"quantidade:\", jsonData.quantidade);\r\nconsole.log(\"Array Length:\", jsonData.produtos.length);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://serverest.dev/produtos",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "produtos"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-PROD-002 - Retrieve Product by ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-PROD-003 - Create Product with Valid Data",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-PROD-004 - Reject Duplicate Product",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nome\": \"QA Mouse Test 20261023 001\",\r\n  \"preco\": 471,\r\n  \"descricao\": \"Duplicate name test\",\r\n  \"quantidade\": 382\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://serverest.dev/produtos",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "produtos"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Cart",
+          "item": [
+            {
+              "name": "CHECK - Verify Product Stock",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://serverest.dev/produtos/K6leHdftCeOJj8BJ",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "produtos",
+                    "K6leHdftCeOJj8BJ"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CHECK - Verify Created Cart",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://serverest.dev/carrinhos/0xcWZJaV4S2epqF8",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "carrinhos",
+                    "0xcWZJaV4S2epqF8"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CHECK - Verify Product Stock",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CHECK - Verify No Cart Created",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CHECK - Verify Invalid Product ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-CART-001 - Create Cart with Valid Product",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{json_web_token_12f4}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"produtos\": [\r\n    {\r\n      \"idProduto\": \"K6leHdftCeOJj8BJ\",\r\n      \"quantidade\": 2\r\n    }\r\n  ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://serverest.dev/carrinhos",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "carrinhos"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-CART-002 - Reject Creating a Second Cart",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-CART-003 - Reject Cart with Insufficient Stock",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-CART-004 - Reject Cart with Invalid Product ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{json_web_token_13th}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"produtos\": [\r\n    {\r\n      \"idProduto\": \"ZZZZ9999XXXX8888\",\r\n      \"quantidade\": 2\r\n    }\r\n  ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://serverest.dev/carrinhos",
+                  "protocol": "https",
+                  "host": [
+                    "serverest",
+                    "dev"
+                  ],
+                  "path": [
+                    "carrinhos"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "API Automation",
+      "item": [
+        {
+          "name": "User Management",
+          "item": [
+            {
+              "name": "TC-USER-001 - Create Valid User",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();\r\npm.test(\"Status code is 201\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\npm.test(\"Response message should be Cadastro realizado com sucesso\", function () {\r\n    pm.expect(jsonData.message).to.eql(\"Cadastro realizado com sucesso\");\r\n});\r\n\r\npm.test(\"Response should have _id\", function(){\r\n    pm.expect(jsonData).to.have.property(\"_id\");\r\n});\r\n\r\npm.test(\"Response _id should be a non-empty string\", function () {\r\n    pm.expect(jsonData._id).to.be.a(\"string\");\r\n    pm.expect(jsonData._id).to.not.be.empty;\r\n});\r\n\r\n\r\n"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nome\": \"QA Automation User\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"test123456\",\r\n  \"administrador\": \"true\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/usuarios",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "usuarios"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "SETUP - Create User for Duplicate Email",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const email = pm.variables.replaceIn(\"{{$randomEmail}}\");\r\npm.collectionVariables.set(\"duplicateEmail\", email);\r\n\r\n"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Setup user created successfully\", function () {\r\n    pm.response.to.have.status(201);\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nome\": \"QA Setup User\",\r\n  \"email\": \"{{duplicateEmail}}\",\r\n  \"password\": \"test123456\",\r\n  \"administrador\": \"true\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/usuarios",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "usuarios"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-USER-002 - Duplicate Email",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();\r\npm.test(\"Status code is 400\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"Response message should be Este email já está sendo usado\", function () {\r\n    pm.expect(jsonData.message).to.eql(\"Este email já está sendo usado\");\r\n});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nome\": \"QA Duplicate User\",\r\n  \"email\": \"{{duplicateEmail}}\",\r\n  \"password\": \"test123456\",\r\n  \"administrador\": \"true\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/usuarios",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "usuarios"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Authentication",
+          "item": [
+            {
+              "name": "SETUP - Create Auth User",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const email = pm.variables.replaceIn(\"{{$randomEmail}}\");\r\npm.collectionVariables.set(\"authEmail\", email);\r\n"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Setup auth user created successfully\", function () {\r\n    pm.response.to.have.status(201);\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nome\": \"QA Auth User\",\r\n  \"email\": \"{{authEmail}}\",\r\n  \"password\": \"test123456\",\r\n  \"administrador\": \"true\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/usuarios",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "usuarios"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-AUTH-001 - Valid Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Response message should be Login realizado com sucesso\", function () {\r\n    pm.expect(jsonData.message).to.eql(\"Login realizado com sucesso\");\r\n});\r\n\r\npm.test(\"Response should have authorization\", function(){\r\n    pm.expect(jsonData).to.have.property(\"authorization\");\r\n});\r\n\r\npm.test(\"Authorization should be a non-empty string\", function () {\r\n    pm.expect(jsonData.authorization).to.be.a(\"string\");\r\n    pm.expect(jsonData.authorization).to.not.be.empty;\r\n});\r\n\r\npm.collectionVariables.set(\"authToken\", jsonData.authorization);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"email\": \"{{authEmail}}\",\r\n  \"password\": \"test123456\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-AUTH-002 - Invalid Password",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 401\", function () {\r\n    pm.response.to.have.status(401);\r\n});\r\n\r\npm.test(\"Response message should be Email e/ou senha inválidos\", function () {\r\n    pm.expect(jsonData.message).to.eql(\"Email e/ou senha inválidos\");\r\n});\r\n\r\npm.test(\"Response should not contain authorization token\", function () {\r\n    pm.expect(jsonData).to.not.have.property(\"authorization\");\r\n});\r\n\r\n"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"email\": \"{{authEmail}}\",\r\n  \"password\": \"wrongPassword123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Products",
+          "item": [
+            {
+              "name": "TC-PROD-003 - Create Valid Product",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 201\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\npm.test(\"Response message should be Cadastro realizado com sucesso\", function () {\r\n    pm.expect(jsonData.message).to.eql(\"Cadastro realizado com sucesso\");\r\n});\r\n\r\npm.test(\"Response should have _id\", function(){\r\n    pm.expect(jsonData).to.have.property(\"_id\");\r\n});\r\n\r\npm.test(\"_id should be a non-empty string\", function () {\r\n    pm.expect(jsonData._id).to.be.a(\"string\");\r\n    pm.expect(jsonData._id).to.not.be.empty;\r\n});\r\n\r\npm.collectionVariables.set(\"productId\", jsonData._id);"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const nome = \"QA Automation Product \" + pm.variables.replaceIn(\"{{$guid}}\");\r\npm.collectionVariables.set(\"productName\", nome);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nome\": \"{{productName}}\",\r\n  \"preco\": 100,\r\n  \"descricao\": \"Product for API testing\",\r\n  \"quantidade\": 10\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/produtos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-PROD-004 - Duplicate Product",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 400\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"Response message should be Já existe produto com esse nome\", function () {\r\n    pm.expect(jsonData.message).to.eql(\"Já existe produto com esse nome\");\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nome\": \"{{productName}}\",\r\n  \"preco\": 100,\r\n  \"descricao\": \"Product for API testing\",\r\n  \"quantidade\": 10\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/produtos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Cart",
+          "item": [
+            {
+              "name": "TC-CART-001 - Create Valid Cart",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 201\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\npm.test(\"Response message should be Cadastro realizado com sucesso\", function () {\r\n    pm.expect(jsonData.message).to.eql(\"Cadastro realizado com sucesso\");\r\n});\r\n\r\npm.test(\"Response should have _id\", function(){\r\n    pm.expect(jsonData).to.have.property(\"_id\");\r\n});\r\n\r\npm.test(\"_id should be a non-empty string\", function () {\r\n    pm.expect(jsonData._id).to.be.a(\"string\");\r\n    pm.expect(jsonData._id).to.not.be.empty;\r\n});\r\n"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"produtos\": [\r\n    {\r\n      \"idProduto\": \"{{productId}}\",\r\n      \"quantidade\": 2\r\n    }\r\n  ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/carrinhos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "carrinhos"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "SETUP - Create User for Insufficient Stock",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const email = pm.variables.replaceIn(\"{{$randomEmail}}\");\r\npm.collectionVariables.set(\"stockEmail\", email);"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Setup stock user created successfully\", function () {\r\n    pm.response.to.have.status(201);\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nome\": \"QA Stock Test User\",\r\n  \"email\": \"{{stockEmail}}\",\r\n  \"password\": \"test123456\",\r\n  \"administrador\": \"true\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/usuarios",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "usuarios"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "SETUP - Login Stock User",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Response should have authorization\", function(){\r\n    pm.expect(jsonData).to.have.property(\"authorization\");\r\n});\r\n\r\npm.collectionVariables.set(\"authToken\", jsonData.authorization);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"email\": \"{{stockEmail}}\",\r\n  \"password\": \"test123456\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "SETUP - Create Product for Insufficient Stock",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const nome = \"QA Stock Product\" + pm.variables.replaceIn(\"{{$guid}}\");\r\npm.collectionVariables.set(\"stockProductName\", nome);"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 201\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\npm.collectionVariables.set(\"stockProductId\", jsonData._id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nome\": \"{{stockProductName}}\",\r\n  \"preco\": 100,\r\n  \"descricao\": \"Product for insufficient stock testing\",\r\n  \"quantidade\": 10\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/produtos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "TC-CART-003 - Insufficient Stock",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 400\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"Response message should be Produto não possui quantidade suficiente\", function () {\r\n    pm.expect(jsonData.message).to.eql(\"Produto não possui quantidade suficiente\");\r\n});\r\n\r\npm.test(\"Requested quantity should be 11\" , function () {\r\n    pm.expect(jsonData.item.quantidade).to.eql(11);\r\n});    \r\n\r\npm.test(\"Stock quantity should be 10\", function () {\r\n    pm.expect(jsonData.item.quantidadeEstoque).to.eql(10);\r\n});\r\n"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"produtos\": [\r\n    {\r\n      \"idProduto\": \"{{stockProductId}}\",\r\n      \"quantidade\": 11\r\n    }\r\n  ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/carrinhos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "carrinhos"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Data-Driven Testing",
+      "item": [
+        {
+          "name": "SETUP - Create User for Data-Driven Login",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const email = pm.variables.replaceIn(\"{{$randomEmail}}\");\r\npm.collectionVariables.set(\"dataDrivenEmail\", email);\r\n"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 201\", function () {\r\n    pm.response.to.have.status(201);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"QA Data Driven User\",\r\n  \"email\": \"{{dataDrivenEmail}}\",\r\n  \"password\": \"test123456\",\r\n  \"administrador\": \"false\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DD-LOGIN-001 - Invalid Password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const expectedStatus = Number(pm.iterationData.get(\"expectedStatus\"));\r\n\r\npm.test(\"Status code matches test data\", function () {\r\n    pm.response.to.have.status(expectedStatus);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"{{dataDrivenEmail}}\",\r\n  \"password\": \"{{password}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "json_web_token_0ee6",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_12f4",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_13th",
+      "secret": true
+    },
+    {
+      "key": "duplicateEmail",
+      "value": ""
+    },
+    {
+      "key": "authEmail",
+      "value": ""
+    },
+    {
+      "key": "authToken",
+      "value": ""
+    },
+    {
+      "key": "productName",
+      "value": ""
+    },
+    {
+      "key": "productId",
+      "value": ""
+    },
+    {
+      "key": "stockEmail",
+      "value": ""
+    },
+    {
+      "key": "stockProductName",
+      "value": ""
+    },
+    {
+      "key": "stockProductId",
+      "value": ""
+    },
+    {
+      "key": "dataDrivenEmail",
+      "value": ""
+    }
+  ]
+}

@@ -1,23 +1,26 @@
 # ServeRest API Testing Portfolio
 
-**Manual API Testing: 16 test cases completed | API Automation: In progress**
+**Manual API Testing: 16 test cases | Postman API Automation: 8 test scenarios completed**
 
 ## Project Overview
 
 I used Postman to practice API testing with [ServeRest](https://serverest.dev/), a public e-commerce API. I wrote test cases, sent API requests, checked the responses, and saved screenshots of the results.
 
-My manual tests cover User Management, Authentication, Products, and Cart. I am now working on automating selected test cases.
+My tests cover User Management, Authentication, Products, and Cart. I also automated selected scenarios using Postman scripts and ran them with Newman.
 
 ## Quick Portfolio Review
 
 | Item | Details |
 |---|---|
-| Tool | Postman |
+| Tools | Postman, JavaScript, Newman, Git/GitHub |
 | Manual testing | 16 test cases across 4 modules |
-| Recorded results | 16 PASS* |
+| Recorded manual results | 16 PASS* |
+| API automation | 8 test scenarios, plus setup requests |
+| Newman result | 13 requests, 33 assertions passed, 0 failures |
+| Data-driven login | 3 iterations, 6 assertions passed |
 | Test documentation | [Test Cases and Execution Results](test-documentation/ServeRest_API_Test_Cases.xlsx) |
-| Screenshots | [View Test Evidence](evidence/manual-api/) |
-| Automation | 8 test cases selected; work in progress |
+| Manual screenshots | [View Manual Evidence](evidence/manual-api/) |
+| Automation screenshots | [View Automation Evidence](evidence/automation/) |
 
 *TC-AUTH-004 passed the observed missing-email rejection. I have not independently confirmed the exact expected error status and message.*
 
@@ -52,7 +55,7 @@ My manual tests cover User Management, Authentication, Products, and Cart. I am 
 | TC-CART-003 | Reject cart with insufficient stock | PASS |
 | TC-CART-004 | Reject cart with nonexistent product | PASS |
 
-## How I Tested
+## How I Tested Manually
 
 1. Choose a scenario and write the expected result.
 2. Prepare the user, product, or cart data needed for the test.
@@ -62,9 +65,7 @@ My manual tests cover User Management, Authentication, Products, and Cart. I am 
 
 The Excel workbook has two sheets: **Test Cases** (steps and expected results) and **Test Execution** (actual results, status, and evidence links).
 
-## Test Evidence
-
-Screenshots are saved by module:
+### Manual Test Evidence
 
 - [User Management](evidence/manual-api/user-management/)
 - [Authentication](evidence/manual-api/authentication/)
@@ -73,9 +74,9 @@ Screenshots are saved by module:
 
 Some tests also have setup or verification screenshots. For example, Cart tests include checks of stock or cart data.
 
-## API Automation — In Progress
+## API Automation
 
-I selected these 8 cases to automate in Postman:
+I automated these 8 test cases using JavaScript assertions in Postman:
 
 | Test Case ID | Scenario |
 |---|---|
@@ -88,21 +89,64 @@ I selected these 8 cases to automate in Postman:
 | TC-CART-001 | Create valid cart |
 | TC-CART-003 | Reject insufficient stock |
 
-I am working on JavaScript assertions, variables, and reusable test data. Newman and GitHub Actions are planned. **Automated test execution and CI reports have not been published yet.**
+I used setup requests and Postman variables to create users and products, reuse IDs and authorization tokens, and avoid fixed test data where possible.
+
+### Automated Test Results
+
+| Run | Result |
+|---|---|
+| Postman Collection Runner — API Automation | 33 passed, 0 failed |
+| Newman CLI — API Automation | 13 requests, 33 assertions passed, 0 failures |
+| Postman Data-Driven Login | 3 iterations, 6 assertions passed, 0 failures |
+
+These are results from the recorded runs, not a guarantee that future runs will always pass.
+
+### Run API Automation with Newman
+
+Install Node.js and Newman, then run the following commands from the project root in PowerShell:
+
+```powershell
+npm.cmd install -g newman
+newman.cmd run ".\postman\serverest.postman_collection.json" --environment ".\postman\serverest.postman_environment.json" --folder "API Automation"
+```
+
+To export a detailed JSON report locally:
+
+```powershell
+New-Item -ItemType Directory -Path ".\reports" -Force
+newman.cmd run ".\postman\serverest.postman_collection.json" --environment ".\postman\serverest.postman_environment.json" --folder "API Automation" --reporters cli,json --reporter-json-export ".\reports\newman-report.json"
+```
+
+The `reports/` folder is ignored by Git because raw Newman JSON reports can contain tokens and other request or response data.
+
+### Data-Driven Login Testing
+
+I used [login-test-data.csv](test-data/login-test-data.csv) to test three invalid passwords. Each test expects HTTP 401. The Postman Runner result shows 3 iterations and 6 passed assertions (including setup requests).
+
+This is a separate run from the `API Automation` folder. The CSV is used with the `Data-Driven Testing` folder in Postman Runner.
+
+### Automation Evidence
+
+- **Postman scripts:** [Create User](evidence/automation/postman/user-create-pass.png), [Duplicate Email](evidence/automation/postman/duplicate-email-test.png), [Create Product](evidence/automation/postman/product-create-pass.png), [Create Cart](evidence/automation/postman/cart-create-pass.png)
+- **Variables and runner:** [Dynamic Setup](evidence/automation/postman/request-chaining-setup.png), [Valid Login Runner](evidence/automation/postman/valid-login-runner.png)
+- **Full run:** [Collection Runner — 33 passed](evidence/automation/collection-runner/automation-collection-run-pass.png)
+- **Data-driven:** [Login Data-Driven Runner — 6 passed](evidence/automation/data-driven/login-data-driven-pass.png)
+- **Newman:** [Execution — Part 1](evidence/automation/newman/newman-cli-execution%201.png), [Execution — Part 2](evidence/automation/newman/newman-cli-execution%202.png), [Summary — 33 assertions passed](evidence/automation/newman/newman-cli-summary.png)
 
 ## Notes
 
 - The tests use the shared public ServeRest API (`https://serverest.dev`). Test data can change or reset.
 - Some API messages are in Portuguese. I recorded the messages returned by the API.
-- The 16 PASS results describe these manual test runs, not full API coverage.
-- TC-AUTH-004 needs confirmation of the exact expected error response.
+- The 16 manual PASS results describe the recorded test runs, not full API coverage.
+- TC-AUTH-004 still needs confirmation of the exact expected error response.
 - Only test accounts should be used. Passwords, active tokens, and API keys should not be shared in the repository.
+- GitHub Actions CI is planned for the next phase; CI execution is not yet included in these results.
 
 ## Next Steps
 
-1. Finish the 8 selected Postman automated tests with data that can be used again.
-2. Run the collection with Newman and GitHub Actions.
-3. Add instructions for running the tests, reports, and final portfolio review.
+1. Add GitHub Actions to run the Newman API Automation folder.
+2. Review the CI results and artifacts.
+3. Do a final review of the README, test files, and evidence links.
 
 ## References
 

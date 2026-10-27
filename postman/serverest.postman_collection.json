@@ -1,10 +1,11 @@
 {
   "info": {
-    "_postman_id": "5e43506c-6217-4b41-96ef-170a92f15ad9",
-    "name": "ServeRest API Testing Portfolio",
+    "_postman_id": "c84fbb76-1aa8-455f-9d99-73a578a40484",
+    "name": "ServeRest API Testing Portfolio - Cleanup Draft",
+    "description": "Cleanup draft (corrected URL structures); verify behavior on ServeRest test environment before replacing production portfolio.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "57783570",
-    "_collection_link": "https://go.postman.co/collection/57783570-5e43506c-6217-4b41-96ef-170a92f15ad9?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/57783570-c84fbb76-1aa8-455f-9d99-73a578a40484?source=collection_link"
   },
   "item": [
     {
@@ -155,15 +156,6 @@
               "request": {
                 "method": "GET",
                 "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
                 "url": {
                   "raw": "https://serverest.dev/usuarios?email=qa.auth.20261018.3211@example.com",
                   "protocol": "https",
@@ -386,15 +378,6 @@
               "request": {
                 "method": "GET",
                 "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
                 "url": {
                   "raw": "https://serverest.dev/produtos",
                   "protocol": "https",
@@ -651,10 +634,57 @@
                 {
                   "listen": "test",
                   "script": {
-                    "type": "text/javascript",
                     "exec": [
-                      "const jsonData = pm.response.json();\r\npm.test(\"Status code is 201\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\npm.test(\"Response message should be Cadastro realizado com sucesso\", function () {\r\n    pm.expect(jsonData.message).to.eql(\"Cadastro realizado com sucesso\");\r\n});\r\n\r\npm.test(\"Response should have _id\", function(){\r\n    pm.expect(jsonData).to.have.property(\"_id\");\r\n});\r\n\r\npm.test(\"Response _id should be a non-empty string\", function () {\r\n    pm.expect(jsonData._id).to.be.a(\"string\");\r\n    pm.expect(jsonData._id).to.not.be.empty;\r\n});\r\n\r\n\r\n"
-                    ]
+                      "const jsonData = pm.response.json();\r",
+                      "pm.test(\"Status code is 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response message should be Cadastro realizado com sucesso\", function () {\r",
+                      "    pm.expect(jsonData.message).to.eql(\"Cadastro realizado com sucesso\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response should have _id\", function(){\r",
+                      "    pm.expect(jsonData).to.have.property(\"_id\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response _id should be a non-empty string\", function () {\r",
+                      "    pm.expect(jsonData._id).to.be.a(\"string\");\r",
+                      "    pm.expect(jsonData._id).to.not.be.empty;\r",
+                      "});\r",
+                      "\r",
+                      "if (\r",
+                      "    pm.response.code === 201 &&\r",
+                      "    typeof jsonData._id === \"string\" &&\r",
+                      "    jsonData._id.length > 0\r",
+                      ") {\r",
+                      "    pm.collectionVariables.set(\"createdUserId\", jsonData._id);\r",
+                      "}\r",
+                      "\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.collectionVariables.unset(\"createdUserId\");",
+                      "",
+                      "pm.collectionVariables.unset(\"duplicateUserId\");",
+                      "pm.collectionVariables.unset(\"authUserId\");",
+                      "pm.collectionVariables.unset(\"stockUserId\");",
+                      "pm.collectionVariables.unset(\"productId\");",
+                      "pm.collectionVariables.unset(\"stockProductId\");",
+                      "pm.collectionVariables.unset(\"cartId\");",
+                      "pm.collectionVariables.unset(\"cartOwnerToken\");"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
                   }
                 }
               ],
@@ -688,19 +718,34 @@
                 {
                   "listen": "prerequest",
                   "script": {
-                    "type": "text/javascript",
                     "exec": [
-                      "const email = pm.variables.replaceIn(\"{{$randomEmail}}\");\r\npm.collectionVariables.set(\"duplicateEmail\", email);\r\n\r\n"
-                    ]
+                      "const email = pm.variables.replaceIn(\"{{$randomEmail}}\");\r",
+                      "pm.collectionVariables.set(\"duplicateEmail\", email);\r",
+                      "\r",
+                      "pm.collectionVariables.unset(\"duplicateUserId\");"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
                   }
                 },
                 {
                   "listen": "test",
                   "script": {
-                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Setup user created successfully\", function () {\r\n    pm.response.to.have.status(201);\r\n});"
-                    ]
+                      "pm.test(\"Setup user created successfully\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "const jsonData = pm.response.json();\r",
+                      "\r",
+                      "if (pm.response.code === 201 && typeof jsonData._id === \"string\" && jsonData._id.length > 0) {\r",
+                      "    pm.collectionVariables.set(\"duplicateUserId\", jsonData._id);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
                   }
                 }
               ],
@@ -785,19 +830,39 @@
                 {
                   "listen": "prerequest",
                   "script": {
-                    "type": "text/javascript",
                     "exec": [
-                      "const email = pm.variables.replaceIn(\"{{$randomEmail}}\");\r\npm.collectionVariables.set(\"authEmail\", email);\r\n"
-                    ]
+                      "const email = pm.variables.replaceIn(\"{{$randomEmail}}\");\r",
+                      "pm.collectionVariables.set(\"authEmail\", email);\r",
+                      "\r",
+                      "pm.collectionVariables.unset(\"authUserId\");\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
                   }
                 },
                 {
                   "listen": "test",
                   "script": {
-                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Setup auth user created successfully\", function () {\r\n    pm.response.to.have.status(201);\r\n});"
-                    ]
+                      "pm.test(\"Setup auth user created successfully\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "const jsonData = pm.response.json();\r",
+                      "\r",
+                      "if (\r",
+                      "    pm.response.code === 201 &&\r",
+                      "    typeof jsonData._id === \"string\" &&\r",
+                      "    jsonData._id.length > 0\r",
+                      ") {\r",
+                      "    pm.collectionVariables.set(\"authUserId\", jsonData._id);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
                   }
                 }
               ],
@@ -833,7 +898,20 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "const jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Response message should be Login realizado com sucesso\", function () {\r\n    pm.expect(jsonData.message).to.eql(\"Login realizado com sucesso\");\r\n});\r\n\r\npm.test(\"Response should have authorization\", function(){\r\n    pm.expect(jsonData).to.have.property(\"authorization\");\r\n});\r\n\r\npm.test(\"Authorization should be a non-empty string\", function () {\r\n    pm.expect(jsonData.authorization).to.be.a(\"string\");\r\n    pm.expect(jsonData.authorization).to.not.be.empty;\r\n});\r\n\r\npm.collectionVariables.set(\"authToken\", jsonData.authorization);"
+                      "const jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Response message should be Login realizado com sucesso\", function () {\r\n    pm.expect(jsonData.message).to.eql(\"Login realizado com sucesso\");\r\n});\r\n\r\npm.test(\"Response should have authorization\", function(){\r\n    pm.expect(jsonData).to.have.property(\"authorization\");\r\n});\r\n\r\npm.test(\"Authorization should be a non-empty string\", function () {\r\n    pm.expect(jsonData.authorization).to.be.a(\"string\");\r\n    pm.expect(jsonData.authorization).to.not.be.empty;\r\n});\r\n\r\npm.collectionVariables.set(\"authToken\", jsonData.authorization);",
+                      "",
+                      "if (pm.response.code === 200 && typeof jsonData.authorization === \"string\" && jsonData.authorization.length > 0) {",
+                      "    pm.collectionVariables.set(\"cartOwnerToken\", jsonData.authorization);",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.collectionVariables.unset(\"authToken\");"
                     ]
                   }
                 }
@@ -910,19 +988,51 @@
                 {
                   "listen": "test",
                   "script": {
-                    "type": "text/javascript",
                     "exec": [
-                      "const jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 201\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\npm.test(\"Response message should be Cadastro realizado com sucesso\", function () {\r\n    pm.expect(jsonData.message).to.eql(\"Cadastro realizado com sucesso\");\r\n});\r\n\r\npm.test(\"Response should have _id\", function(){\r\n    pm.expect(jsonData).to.have.property(\"_id\");\r\n});\r\n\r\npm.test(\"_id should be a non-empty string\", function () {\r\n    pm.expect(jsonData._id).to.be.a(\"string\");\r\n    pm.expect(jsonData._id).to.not.be.empty;\r\n});\r\n\r\npm.collectionVariables.set(\"productId\", jsonData._id);"
-                    ]
+                      "const jsonData = pm.response.json();\r",
+                      "\r",
+                      "pm.test(\"Status code is 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response message should be Cadastro realizado com sucesso\", function () {\r",
+                      "    pm.expect(jsonData.message).to.eql(\"Cadastro realizado com sucesso\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response should have _id\", function(){\r",
+                      "    pm.expect(jsonData).to.have.property(\"_id\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"_id should be a non-empty string\", function () {\r",
+                      "    pm.expect(jsonData._id).to.be.a(\"string\");\r",
+                      "    pm.expect(jsonData._id).to.not.be.empty;\r",
+                      "});\r",
+                      "\r",
+                      "if (\r",
+                      "    pm.response.code === 201 &&\r",
+                      "    typeof jsonData._id === \"string\" &&\r",
+                      "    jsonData._id.length > 0\r",
+                      ") {\r",
+                      "    pm.collectionVariables.set(\"productId\", jsonData._id);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
                   }
                 },
                 {
                   "listen": "prerequest",
                   "script": {
-                    "type": "text/javascript",
                     "exec": [
-                      "const nome = \"QA Automation Product \" + pm.variables.replaceIn(\"{{$guid}}\");\r\npm.collectionVariables.set(\"productName\", nome);"
-                    ]
+                      "const nome = \"QA Automation Product \" + pm.variables.replaceIn(\"{{$guid}}\");\r",
+                      "pm.collectionVariables.set(\"productName\", nome);\r",
+                      "\r",
+                      "pm.collectionVariables.unset(\"productId\");"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
                   }
                 }
               ],
@@ -1008,10 +1118,48 @@
                 {
                   "listen": "test",
                   "script": {
-                    "type": "text/javascript",
                     "exec": [
-                      "const jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 201\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\npm.test(\"Response message should be Cadastro realizado com sucesso\", function () {\r\n    pm.expect(jsonData.message).to.eql(\"Cadastro realizado com sucesso\");\r\n});\r\n\r\npm.test(\"Response should have _id\", function(){\r\n    pm.expect(jsonData).to.have.property(\"_id\");\r\n});\r\n\r\npm.test(\"_id should be a non-empty string\", function () {\r\n    pm.expect(jsonData._id).to.be.a(\"string\");\r\n    pm.expect(jsonData._id).to.not.be.empty;\r\n});\r\n"
-                    ]
+                      "const jsonData = pm.response.json();\r",
+                      "\r",
+                      "pm.test(\"Status code is 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response message should be Cadastro realizado com sucesso\", function () {\r",
+                      "    pm.expect(jsonData.message).to.eql(\"Cadastro realizado com sucesso\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response should have _id\", function(){\r",
+                      "    pm.expect(jsonData).to.have.property(\"_id\");\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"_id should be a non-empty string\", function () {\r",
+                      "    pm.expect(jsonData._id).to.be.a(\"string\");\r",
+                      "    pm.expect(jsonData._id).to.not.be.empty;\r",
+                      "});\r",
+                      "\r",
+                      "if (\r",
+                      "    pm.response.code === 201 &&\r",
+                      "    typeof jsonData._id === \"string\" &&\r",
+                      "    jsonData._id.length > 0\r",
+                      ") {\r",
+                      "    pm.collectionVariables.set(\"cartId\", jsonData._id);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.collectionVariables.unset(\"cartId\");"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
                   }
                 }
               ],
@@ -1050,19 +1198,38 @@
                 {
                   "listen": "prerequest",
                   "script": {
-                    "type": "text/javascript",
                     "exec": [
-                      "const email = pm.variables.replaceIn(\"{{$randomEmail}}\");\r\npm.collectionVariables.set(\"stockEmail\", email);"
-                    ]
+                      "const email = pm.variables.replaceIn(\"{{$randomEmail}}\");\r",
+                      "pm.collectionVariables.set(\"stockEmail\", email);\r",
+                      "\r",
+                      "pm.collectionVariables.unset(\"stockUserId\");"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
                   }
                 },
                 {
                   "listen": "test",
                   "script": {
-                    "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Setup stock user created successfully\", function () {\r\n    pm.response.to.have.status(201);\r\n});"
-                    ]
+                      "pm.test(\"Setup stock user created successfully\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "const jsonData = pm.response.json();\r",
+                      "\r",
+                      "if (\r",
+                      "    pm.response.code === 201 &&\r",
+                      "    typeof jsonData._id === \"string\" &&\r",
+                      "    jsonData._id.length > 0\r",
+                      ") {\r",
+                      "    pm.collectionVariables.set(\"stockUserId\", jsonData._id);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
                   }
                 }
               ],
@@ -1098,7 +1265,28 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "const jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Response should have authorization\", function(){\r\n    pm.expect(jsonData).to.have.property(\"authorization\");\r\n});\r\n\r\npm.collectionVariables.set(\"authToken\", jsonData.authorization);"
+                      "const jsonData = pm.response.json();",
+                      "",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Response should have authorization\", function(){",
+                      "    pm.expect(jsonData).to.have.property(\"authorization\");",
+                      "});",
+                      "",
+                      "if (pm.response.code === 200 && typeof jsonData.authorization === \"string\" && jsonData.authorization.length > 0) {",
+                      "    pm.collectionVariables.set(\"authToken\", jsonData.authorization);",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.collectionVariables.unset(\"authToken\");"
                     ]
                   }
                 }
@@ -1133,19 +1321,38 @@
                 {
                   "listen": "prerequest",
                   "script": {
-                    "type": "text/javascript",
                     "exec": [
-                      "const nome = \"QA Stock Product\" + pm.variables.replaceIn(\"{{$guid}}\");\r\npm.collectionVariables.set(\"stockProductName\", nome);"
-                    ]
+                      "const nome = \"QA Stock Product\" + pm.variables.replaceIn(\"{{$guid}}\");\r",
+                      "pm.collectionVariables.set(\"stockProductName\", nome);\r",
+                      "\r",
+                      "pm.collectionVariables.unset(\"stockProductId\");"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
                   }
                 },
                 {
                   "listen": "test",
                   "script": {
-                    "type": "text/javascript",
                     "exec": [
-                      "const jsonData = pm.response.json();\r\n\r\npm.test(\"Status code is 201\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\npm.collectionVariables.set(\"stockProductId\", jsonData._id);"
-                    ]
+                      "const jsonData = pm.response.json();\r",
+                      "\r",
+                      "pm.test(\"Status code is 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "if (\r",
+                      "    pm.response.code === 201 &&\r",
+                      "    typeof jsonData._id === \"string\" &&\r",
+                      "    jsonData._id.length > 0\r",
+                      ") {\r",
+                      "    pm.collectionVariables.set(\"stockProductId\", jsonData._id);\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
                   }
                 }
               ],
@@ -1221,6 +1428,682 @@
               "response": []
             }
           ]
+        },
+        {
+          "name": "Cleanup - Created Test Data",
+          "item": [
+            {
+              "name": "CLEANUP-01 - Cancel Created Cart",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const id = pm.collectionVariables.get(\"cartId\");",
+                      "if (typeof id !== \"string\" || id.length === 0) {",
+                      "    console.log(\"SKIP CLEANUP-01 - Cancel Created Cart: no created resource ID\");",
+                      "    pm.execution.skipRequest();",
+                      "}",
+                      "const cleanupToken = pm.collectionVariables.get(\"cartOwnerToken\");",
+                      "if (typeof cleanupToken !== \"string\" || cleanupToken.length === 0) {",
+                      "    console.log(\"SKIP CLEANUP-01 - Cancel Created Cart: no owner authorization token\");",
+                      "    pm.execution.skipRequest();",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"CLEANUP-01 - Cancel Created Cart: API accepted removal\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{cartOwnerToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/carrinhos/cancelar-compra",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "carrinhos",
+                    "cancelar-compra"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "VERIFY-01 - Cart Removed",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const id = pm.collectionVariables.get(\"cartId\");",
+                      "if (typeof id !== \"string\" || id.length === 0) {",
+                      "    console.log(\"SKIP VERIFY-01 - Cart Removed: no created resource ID\");",
+                      "    pm.execution.skipRequest();",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"VERIFY-01 - Cart Removed: resource no longer exists\", function () {",
+                      "    pm.expect(pm.response.code).to.eql(400);",
+                      "});",
+                      "if (pm.response.code === 400) {",
+                      "    pm.collectionVariables.unset(\"cartId\");",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/carrinhos/{{cartId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "carrinhos",
+                    "{{cartId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CLEANUP-02 - Delete productId",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const id = pm.collectionVariables.get(\"productId\");",
+                      "if (typeof id !== \"string\" || id.length === 0) {",
+                      "    console.log(\"SKIP CLEANUP-02 - Delete productId: no created resource ID\");",
+                      "    pm.execution.skipRequest();",
+                      "}",
+                      "const cleanupToken = pm.collectionVariables.get(\"authToken\");",
+                      "if (typeof cleanupToken !== \"string\" || cleanupToken.length === 0) {",
+                      "    console.log(\"SKIP CLEANUP-02 - Delete productId: no owner authorization token\");",
+                      "    pm.execution.skipRequest();",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"CLEANUP-02 - Delete productId: API accepted removal\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos/{{productId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos",
+                    "{{productId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "VERIFY-02 - productId Removed",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const id = pm.collectionVariables.get(\"productId\");",
+                      "if (typeof id !== \"string\" || id.length === 0) {",
+                      "    console.log(\"SKIP VERIFY-02 - productId Removed: no created resource ID\");",
+                      "    pm.execution.skipRequest();",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"VERIFY-02 - productId Removed: resource no longer exists\", function () {",
+                      "    pm.expect(pm.response.code).to.eql(400);",
+                      "});",
+                      "if (pm.response.code === 400) {",
+                      "    pm.collectionVariables.unset(\"productId\");",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos/{{productId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos",
+                    "{{productId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CLEANUP-03 - Delete stockProductId",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const id = pm.collectionVariables.get(\"stockProductId\");",
+                      "if (typeof id !== \"string\" || id.length === 0) {",
+                      "    console.log(\"SKIP CLEANUP-03 - Delete stockProductId: no created resource ID\");",
+                      "    pm.execution.skipRequest();",
+                      "}",
+                      "const cleanupToken = pm.collectionVariables.get(\"authToken\");",
+                      "if (typeof cleanupToken !== \"string\" || cleanupToken.length === 0) {",
+                      "    console.log(\"SKIP CLEANUP-03 - Delete stockProductId: no owner authorization token\");",
+                      "    pm.execution.skipRequest();",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"CLEANUP-03 - Delete stockProductId: API accepted removal\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos/{{stockProductId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos",
+                    "{{stockProductId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "VERIFY-03 - stockProductId Removed",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const id = pm.collectionVariables.get(\"stockProductId\");",
+                      "if (typeof id !== \"string\" || id.length === 0) {",
+                      "    console.log(\"SKIP VERIFY-03 - stockProductId Removed: no created resource ID\");",
+                      "    pm.execution.skipRequest();",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"VERIFY-03 - stockProductId Removed: resource no longer exists\", function () {",
+                      "    pm.expect(pm.response.code).to.eql(400);",
+                      "});",
+                      "if (pm.response.code === 400) {",
+                      "    pm.collectionVariables.unset(\"stockProductId\");",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos/{{stockProductId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos",
+                    "{{stockProductId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CLEANUP-04 - Delete createdUserId",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const id = pm.collectionVariables.get(\"createdUserId\");",
+                      "if (typeof id !== \"string\" || id.length === 0) {",
+                      "    console.log(\"SKIP CLEANUP-04 - Delete createdUserId: no created resource ID\");",
+                      "    pm.execution.skipRequest();",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"CLEANUP-04 - Delete createdUserId: API accepted removal\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/usuarios/{{createdUserId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "usuarios",
+                    "{{createdUserId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "VERIFY-04 - createdUserId Removed",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const id = pm.collectionVariables.get(\"createdUserId\");",
+                      "if (typeof id !== \"string\" || id.length === 0) {",
+                      "    console.log(\"SKIP VERIFY-04 - createdUserId Removed: no created resource ID\");",
+                      "    pm.execution.skipRequest();",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"VERIFY-04 - createdUserId Removed: resource no longer exists\", function () {",
+                      "    pm.expect(pm.response.code).to.eql(400);",
+                      "});",
+                      "if (pm.response.code === 400) {",
+                      "    pm.collectionVariables.unset(\"createdUserId\");",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/usuarios/{{createdUserId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "usuarios",
+                    "{{createdUserId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CLEANUP-05 - Delete duplicateUserId",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const id = pm.collectionVariables.get(\"duplicateUserId\");",
+                      "if (typeof id !== \"string\" || id.length === 0) {",
+                      "    console.log(\"SKIP CLEANUP-05 - Delete duplicateUserId: no created resource ID\");",
+                      "    pm.execution.skipRequest();",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"CLEANUP-05 - Delete duplicateUserId: API accepted removal\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/usuarios/{{duplicateUserId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "usuarios",
+                    "{{duplicateUserId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "VERIFY-05 - duplicateUserId Removed",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const id = pm.collectionVariables.get(\"duplicateUserId\");",
+                      "if (typeof id !== \"string\" || id.length === 0) {",
+                      "    console.log(\"SKIP VERIFY-05 - duplicateUserId Removed: no created resource ID\");",
+                      "    pm.execution.skipRequest();",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"VERIFY-05 - duplicateUserId Removed: resource no longer exists\", function () {",
+                      "    pm.expect(pm.response.code).to.eql(400);",
+                      "});",
+                      "if (pm.response.code === 400) {",
+                      "    pm.collectionVariables.unset(\"duplicateUserId\");",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/usuarios/{{duplicateUserId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "usuarios",
+                    "{{duplicateUserId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CLEANUP-06 - Delete authUserId",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const id = pm.collectionVariables.get(\"authUserId\");",
+                      "if (typeof id !== \"string\" || id.length === 0) {",
+                      "    console.log(\"SKIP CLEANUP-06 - Delete authUserId: no created resource ID\");",
+                      "    pm.execution.skipRequest();",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"CLEANUP-06 - Delete authUserId: API accepted removal\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/usuarios/{{authUserId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "usuarios",
+                    "{{authUserId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "VERIFY-06 - authUserId Removed",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const id = pm.collectionVariables.get(\"authUserId\");",
+                      "if (typeof id !== \"string\" || id.length === 0) {",
+                      "    console.log(\"SKIP VERIFY-06 - authUserId Removed: no created resource ID\");",
+                      "    pm.execution.skipRequest();",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"VERIFY-06 - authUserId Removed: resource no longer exists\", function () {",
+                      "    pm.expect(pm.response.code).to.eql(400);",
+                      "});",
+                      "if (pm.response.code === 400) {",
+                      "    pm.collectionVariables.unset(\"authUserId\");",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/usuarios/{{authUserId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "usuarios",
+                    "{{authUserId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "CLEANUP-07 - Delete stockUserId",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const id = pm.collectionVariables.get(\"stockUserId\");",
+                      "if (typeof id !== \"string\" || id.length === 0) {",
+                      "    console.log(\"SKIP CLEANUP-07 - Delete stockUserId: no created resource ID\");",
+                      "    pm.execution.skipRequest();",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"CLEANUP-07 - Delete stockUserId: API accepted removal\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/usuarios/{{stockUserId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "usuarios",
+                    "{{stockUserId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "VERIFY-07 - stockUserId Removed",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const id = pm.collectionVariables.get(\"stockUserId\");",
+                      "if (typeof id !== \"string\" || id.length === 0) {",
+                      "    console.log(\"SKIP VERIFY-07 - stockUserId Removed: no created resource ID\");",
+                      "    pm.execution.skipRequest();",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"VERIFY-07 - stockUserId Removed: resource no longer exists\", function () {",
+                      "    pm.expect(pm.response.code).to.eql(400);",
+                      "});",
+                      "if (pm.response.code === 400) {",
+                      "    pm.collectionVariables.unset(\"stockUserId\");",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/usuarios/{{stockUserId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "usuarios",
+                    "{{stockUserId}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Run only as part of the full API Automation folder. Deletes only IDs captured by setup/tests in that run. Must run Cart cancellation before products and users."
         }
       ]
     },
@@ -1315,16 +2198,13 @@
   ],
   "variable": [
     {
-      "key": "json_web_token_0ee6",
-      "secret": true
+      "key": "json_web_token_0ee6"
     },
     {
-      "key": "json_web_token_12f4",
-      "secret": true
+      "key": "json_web_token_12f4"
     },
     {
-      "key": "json_web_token_13th",
-      "secret": true
+      "key": "json_web_token_13th"
     },
     {
       "key": "duplicateEmail",
@@ -1343,10 +2223,6 @@
       "value": ""
     },
     {
-      "key": "productId",
-      "value": ""
-    },
-    {
       "key": "stockEmail",
       "value": ""
     },
@@ -1355,11 +2231,11 @@
       "value": ""
     },
     {
-      "key": "stockProductId",
+      "key": "dataDrivenEmail",
       "value": ""
     },
     {
-      "key": "dataDrivenEmail",
+      "key": "cartOwnerToken",
       "value": ""
     }
   ]

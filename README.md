@@ -1,22 +1,24 @@
 # ServeRest API Testing Portfolio
 
-**Manual API Testing: 16 test cases | Postman API Automation: 8 test scenarios completed**
+**Manual API Testing: 16 test cases | API Automation: 8 test scenarios | Test Data Cleanup**
 
 ## Project Overview
 
 I used Postman to practice API testing with [ServeRest](https://serverest.dev/), a public e-commerce API. I wrote test cases, sent API requests, checked the responses, and saved screenshots of the results.
 
-My tests cover User Management, Authentication, Products, and Cart. I also automated selected scenarios using Postman scripts and ran them with Newman.
+My tests cover User Management, Authentication, Products, and Cart. I automated selected scenarios using Postman scripts and Newman. I later added cleanup requests to remove test data created during automation.
 
 ## Quick Portfolio Review
 
 | Item | Details |
 |---|---|
-| Tools | Postman, JavaScript, Newman, Git/GitHub |
+| Tools | Postman, JavaScript, Newman, Git/GitHub, GitHub Actions |
 | Manual testing | 16 test cases across 4 modules |
 | Recorded manual results | 16 PASS* |
 | API automation | 8 test scenarios, plus setup requests |
-| Newman result | 13 requests, 33 assertions passed, 0 failures |
+| Newman result (with cleanup) | 27 requests, 47 assertions passed, 0 failures |
+| Reliability test | 3 iterations, 141 assertions passed, 0 failures |
+| GitHub Actions | CI workflow passed before cleanup; updated collection pending CI verification |
 | Data-driven login | 3 iterations, 6 assertions passed |
 | Test documentation | [Test Cases and Execution Results](test-documentation/ServeRest_API_Test_Cases.xlsx) |
 | Manual screenshots | [View Manual Evidence](evidence/manual-api/) |
@@ -89,17 +91,29 @@ I automated these 8 test cases using JavaScript assertions in Postman:
 | TC-CART-001 | Create valid cart |
 | TC-CART-003 | Reject insufficient stock |
 
-I used setup requests and Postman variables to create users and products, reuse IDs and authorization tokens, and avoid fixed test data where possible.
+I used setup requests and Postman variables to create users and products, reuse IDs and authorization tokens, and avoid fixed test data where possible. The collection now includes cleanup and verification requests.
 
 ### Automated Test Results
 
 | Run | Result |
 |---|---|
-| Postman Collection Runner — API Automation | 33 passed, 0 failed |
-| Newman CLI — API Automation | 13 requests, 33 assertions passed, 0 failures |
+| Postman Collection Runner — API Automation with cleanup | 27 requests, 47 assertions passed, 0 failures (1 iteration) |
+| Reliability test — API Automation with cleanup | 3 iterations, 141 assertions passed, 0 failures |
+| Newman CLI — API Automation with cleanup | 27 requests, 47 assertions passed, 0 failures |
 | Postman Data-Driven Login | 3 iterations, 6 assertions passed, 0 failures |
 
-These are results from the recorded runs, not a guarantee that future runs will always pass.
+These are results from recorded runs, not a guarantee that future runs will always pass. The original automation run (before cleanup) had 13 requests and 33 assertions.
+
+### Test Data Cleanup
+
+The `API Automation` folder runs the automated scenarios first, followed by 7 cleanup requests and 7 verification requests. Cleanup covers the cart, products, and users created during the run.
+
+- Store the IDs of newly created test data in Postman variables.
+- Clear old IDs before creating new test data to avoid using values from previous runs.
+- Cancel the test cart using its owner's authorization token, then delete the test products and users.
+- Send GET requests after cleanup to check that the resources no longer exist.
+
+In my recorded runs, the cleanup requests and verification checks passed. The tests use the shared ServeRest public API, so results can change if the service or its data changes.
 
 ### Run API Automation with Newman
 
@@ -131,7 +145,18 @@ This is a separate run from the `API Automation` folder. The CSV is used with th
 - **Variables and runner:** [Dynamic Setup](evidence/automation/postman/request-chaining-setup.png), [Valid Login Runner](evidence/automation/postman/valid-login-runner.png)
 - **Full run:** [Collection Runner — 33 passed](evidence/automation/collection-runner/automation-collection-run-pass.png)
 - **Data-driven:** [Login Data-Driven Runner — 6 passed](evidence/automation/data-driven/login-data-driven-pass.png)
-- **Newman:** [Execution — Part 1](evidence/automation/newman/newman-cli-execution%201.png), [Execution — Part 2](evidence/automation/newman/newman-cli-execution%202.png), [Summary — 33 assertions passed](evidence/automation/newman/newman-cli-summary.png)
+- **Newman (original run):** [Execution — Part 1](evidence/automation/newman/newman-cli-execution%201.png), [Execution — Part 2](evidence/automation/newman/newman-cli-execution%202.png), [Summary — 33 assertions passed](evidence/automation/newman/newman-cli-summary.png)
+- **Newman with cleanup:** [Summary — 47 assertions passed](evidence/automation/newman/newman-cleanup-summary.png)
+- **Cleanup and reliability:** [Postman Runner — 3 iterations, 141 passed](evidence/automation/cleanup/cleanup-test-pass.png)
+- **GitHub Actions:** [Successful CI workflow (before cleanup)](evidence/automation/github-actions/ci-workflow-pass.png)
+
+## GitHub Actions CI
+
+GitHub Actions runs the `API Automation` folder with Newman after pushes to `main` and pull requests targeting `main`. The workflow uploads a JUnit test report as an artifact.
+
+The workflow passed when first set up and after upgrading the GitHub Actions versions. Those runs used the **earlier collection without cleanup**. The updated 27-request collection passed locally with Newman; its GitHub Actions run still needs verification after the latest collection is pushed.
+
+Workflow: [ServeRest API Tests](.github/workflows/api-tests.yml) | [GitHub Actions runs](https://github.com/kritsada-chaisongkram/serverest-api-testing/actions)
 
 ## Notes
 
@@ -140,13 +165,13 @@ This is a separate run from the `API Automation` folder. The CSV is used with th
 - The 16 manual PASS results describe the recorded test runs, not full API coverage.
 - TC-AUTH-004 still needs confirmation of the exact expected error response.
 - Only test accounts should be used. Passwords, active tokens, and API keys should not be shared in the repository.
-- GitHub Actions CI is planned for the next phase; CI execution is not yet included in these results.
+- The cleanup results have been verified in Postman Runner and local Newman. Updated GitHub Actions CI results are pending.
 
 ## Next Steps
 
-1. Add GitHub Actions to run the Newman API Automation folder.
-2. Review the CI results and artifacts.
-3. Do a final review of the README, test files, and evidence links.
+1. Commit and push the updated collection, README, and screenshots.
+2. Confirm that GitHub Actions passes with 27 requests and 47 assertions.
+3. Check the repository files and evidence links before completing the portfolio.
 
 ## References
 

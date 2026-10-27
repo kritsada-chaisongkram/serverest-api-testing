@@ -18,7 +18,7 @@ My tests cover User Management, Authentication, Products, and Cart. I automated 
 | API automation | 8 test scenarios, plus setup requests |
 | Newman result (with cleanup) | 27 requests, 47 assertions passed, 0 failures |
 | Reliability test | 3 iterations, 141 assertions passed, 0 failures |
-| GitHub Actions | CI workflow passed before cleanup; updated collection pending CI verification |
+| GitHub Actions | CI passed with cleanup: 27 requests, 47 assertions, 0 failures |
 | Data-driven login | 3 iterations, 6 assertions passed |
 | Test documentation | [Test Cases and Execution Results](test-documentation/ServeRest_API_Test_Cases.xlsx) |
 | Manual screenshots | [View Manual Evidence](evidence/manual-api/) |
@@ -148,15 +148,15 @@ This is a separate run from the `API Automation` folder. The CSV is used with th
 - **Newman (original run):** [Execution — Part 1](evidence/automation/newman/newman-cli-execution%201.png), [Execution — Part 2](evidence/automation/newman/newman-cli-execution%202.png), [Summary — 33 assertions passed](evidence/automation/newman/newman-cli-summary.png)
 - **Newman with cleanup:** [Summary — 47 assertions passed](evidence/automation/newman/newman-cleanup-summary.png)
 - **Cleanup and reliability:** [Postman Runner — 3 iterations, 141 passed](evidence/automation/cleanup/cleanup-test-pass.png)
-- **GitHub Actions:** [Successful CI workflow (before cleanup)](evidence/automation/github-actions/ci-workflow-pass.png)
+- **GitHub Actions:** [Earlier successful CI workflow screenshot](evidence/automation/github-actions/ci-workflow-pass.png), [Latest successful CI run with cleanup](https://github.com/kritsada-chaisongkram/serverest-api-testing/actions/runs/40526392120)
 
 ## GitHub Actions CI
 
 GitHub Actions runs the `API Automation` folder with Newman after pushes to `main` and pull requests targeting `main`. The workflow uploads a JUnit test report as an artifact.
 
-The workflow passed when first set up and after upgrading the GitHub Actions versions. Those runs used the **earlier collection without cleanup**. The updated 27-request collection passed locally with Newman; its GitHub Actions run still needs verification after the latest collection is pushed.
+The latest GitHub Actions run passed using the updated collection with cleanup: **27 requests, 47 assertions, and 0 failures**. All cleanup and verification checks passed. The workflow also uploaded the `newman-test-results` artifact.
 
-Workflow: [ServeRest API Tests](.github/workflows/api-tests.yml) | [GitHub Actions runs](https://github.com/kritsada-chaisongkram/serverest-api-testing/actions)
+Workflow: [ServeRest API Tests](.github/workflows/api-tests.yml) | [Successful CI run with cleanup](https://github.com/kritsada-chaisongkram/serverest-api-testing/actions/runs/40526392120)
 
 ## Notes
 
@@ -165,13 +165,7 @@ Workflow: [ServeRest API Tests](.github/workflows/api-tests.yml) | [GitHub Actio
 - The 16 manual PASS results describe the recorded test runs, not full API coverage.
 - TC-AUTH-004 still needs confirmation of the exact expected error response.
 - Only test accounts should be used. Passwords, active tokens, and API keys should not be shared in the repository.
-- The cleanup results have been verified in Postman Runner and local Newman. Updated GitHub Actions CI results are pending.
-
-## Next Steps
-
-1. Commit and push the updated collection, README, and screenshots.
-2. Confirm that GitHub Actions passes with 27 requests and 47 assertions.
-3. Check the repository files and evidence links before completing the portfolio.
+- Cleanup passed in Postman Runner, local Newman, and the latest GitHub Actions CI run.
 
 ## References
 

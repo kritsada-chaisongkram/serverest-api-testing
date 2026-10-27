@@ -1,0 +1,47 @@
+
+name: ServeRest API Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      # Step 3: Install Newman
+      - name: Install Newman
+        run: npm install -g newman
+
+      # Step 4: Run API Automation
+      - name: Run API Automation
+        run: |
+          mkdir -p reports
+          newman run postman/serverest.postman_collection.json \
+            --environment postman/serverest.postman_environment.json \
+            --folder "API Automation" \
+            --reporters cli,junit \
+            --reporter-junit-export reports/newman-results.xml
+
+      # Step 5: Upload Test Report
+      - name: Upload Test Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-test-results
+          path: reports/newman-results.xml
+          if-no-files-found: warn
+          retention-days: 7
